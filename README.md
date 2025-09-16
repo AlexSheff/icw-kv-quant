@@ -52,8 +52,8 @@ Applying the patch is a simple, two-step process that works on any supported mod
 import torch
 from transformers import AutoModelForCausalLM
 
-# Assuming attention.py is in your project's 'icw' directory
-from icw.attention import patch_model_with_int8_kv_cache
+# Assuming icw_kv_quant.py is in your project's 'icw' directory
+from icw_kv_quant import patch_model_with_int8_kv_cache
 
 # 1. Load any standard supported model
 # model_name = "meta-llama/Llama-2-7b-chat-hf"
