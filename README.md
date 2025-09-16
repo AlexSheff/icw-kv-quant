@@ -20,10 +20,17 @@ The quantization is performed **per-head**, which preserves more information com
 
 The entire solution is self-contained in a single file, making it incredibly easy to integrate.
 
+
 ```
-/path/to/your/project/
-└── icw/
-    └── attention.py     # <-- All required logic is here.
+icw-kv-quant/
+├── src/
+│   └── icw/
+│       ├── __init__.py
+│       └── attention.py   # твой код
+├── README.md
+├── LICENSE
+└── pyproject.toml
+
 ```
 
 ## 4. How It Works
@@ -38,6 +45,8 @@ The solution uses a technique called "monkey-patching" to modify the behavior of
 This process is transparent to the end-user, who interacts with the model as usual but benefits from the massive memory savings.
 
 ## 5. Usage Example
+
+from icw import patch_model_with_int8_kv_cache
 
 Applying the patch is a simple, two-step process that works on any supported model.
 
@@ -55,7 +64,7 @@ model_name = "google/gemma-2b"
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
 # 2. Apply the universal patch with a single function call
-patch_model_with_int8_kv_cache(model)
+patch_model_with_int8_kv_cache(model_name)
 
 # 3. Done! The model is now ready for long-context inference.
 model.to("cuda")
@@ -85,3 +94,7 @@ The results clearly demonstrate two key points:
 
 - **Model Support:** The patch currently supports `Llama`, `Mistral`, `Gemma`, `Phi-3`, and `Qwen2` family models. It can be extended to other architectures by adding their respective attention modules to the patcher.
 - **Latency Overhead:** The on-the-fly quantization and dequantization steps introduce a **noticeable computational overhead**, as shown in the benchmark results. This solution is best suited for applications where handling long contexts is more critical than achieving the lowest possible latency. For latency-sensitive applications, a fully-fused CUDA kernel could be developed to minimize this overhead.
+
+## Installation
+```bash
+pip install icw-kv-quant
