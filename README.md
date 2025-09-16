@@ -23,13 +23,11 @@ The entire solution is self-contained in a single file, making it incredibly eas
 
 ```
 icw-kv-quant/
-├── src/
-│   └── icw/
-│       ├── __init__.py
-│       └── attention.py   # твой код
+├── pyproject.toml
 ├── README.md
 ├── LICENSE
-└── pyproject.toml
+├── icw_kv_quant.py
+
 
 ```
 
